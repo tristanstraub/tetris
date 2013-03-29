@@ -24,6 +24,7 @@ $(function(){
                   row.push(false);
               }
           }
+          this.type = ''  //to hold type, --> color each piece different :)
           this.top = 0;
           this.left = 8;
       };
@@ -32,7 +33,7 @@ $(function(){
           for(var i=0;i<4;i++) {
               for(var j=0;j<4;j++) {
                   if (piece.cells[i][j]) {
-                      board.squares[piece.top+i][piece.left+j].el.removeClass('set');
+                      board.squares[piece.top+i][piece.left+j].el.removeClass('set' + piece.type); //added type
                       board.squares[piece.top+i][piece.left+j].empty = true;
                   }
               }
@@ -43,7 +44,7 @@ $(function(){
           for(var i=0;i<4;i++) {
               for(var j=0;j<4;j++) {
                   if (piece.cells[i][j]) {
-                      board.squares[piece.top+i][piece.left+j].el.addClass('set');
+                      board.squares[piece.top+i][piece.left+j].el.addClass('set' + piece.type); // added type
                       board.squares[piece.top+i][piece.left+j].empty = false;
                   }
               }
@@ -101,22 +102,26 @@ $(function(){
               piece.cells[1][1] = true;
               piece.cells[1][2] = true;
               piece.cells[2][1] = true;
-              piece.cells[2][2] = true;              
+              piece.cells[2][2] = true;
+              piece.type        = index; // type = color
           } else if (index == 1) {
               piece.cells[0][1] = true;
               piece.cells[1][1] = true;
               piece.cells[2][1] = true;
-              piece.cells[3][1] = true;              
+              piece.cells[3][1] = true;
+              piece.type        = index; // type = color         
           } else if (index == 2) {
               piece.cells[0][0] = true;
               piece.cells[0][1] = true;
               piece.cells[1][1] = true;
-              piece.cells[1][2] = true;              
+              piece.cells[1][2] = true; 
+              piece.type        = index; // type = color            
           } else if (index == 3) {
               piece.cells[1][0] = true;
               piece.cells[1][1] = true;
               piece.cells[0][1] = true;
-              piece.cells[0][2] = true;              
+              piece.cells[0][2] = true;
+              piece.type        = index; // type = color              
           }
 
           return piece;
@@ -294,8 +299,8 @@ $(function(){
                 draw_piece(board, board.piece);              
             }
 
-        } else if (kc == 32) {
-            // space -- rotate
+        } else if (kc == 32 || kc == 38) {
+            // space or up -- rotate
             if (can_rotate(board, board.piece)) {
                 rotate_piece(board, board.piece);
             }
